@@ -1,0 +1,69 @@
+<template name="Products_list">
+    <div>
+        <div class="search">
+            <form class="form-inline" id="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="name" placeholder="产品名称">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="min-price" placeholder="最低价">
+                    -
+                    <input type="text" class="form-control" name="max-price" placeholder="最高价">
+                </div>
+                &nbsp;
+                <button class="btn btn-primary" id="search-btn">搜 索</button>
+                &nbsp;
+                <button class="btn btn-default" id="reset-btn">重 置</button>
+            </form>
+        </div>
+        <div class="list">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th width="20%">名称</th>
+                        <th width="10%">价格</th>
+                        <th width="30%">简介</th>
+                        <th width="25%">最后更新时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#if products.total}}
+                        {{#each product in products.products}}
+                            <tr>
+                                <td>{{product.name}}</td>
+                                <td>{{product.price}}</td>
+                                <td>{{product.desc}}</td>
+                                <td>{{product.updatedAt}}</td>
+                                <td>
+                                    <a href="{{pathFor 'Products.show' id=product._id}}">
+                                        <button class="btn btn-default">详情</button> &nbsp;
+                                    </a>
+                                    <a href="{{pathFor 'Products.edit' id=product._id}}">
+                                        <button data-id="{{product._id}}" class="btn btn-primary edit">编辑</button> &nbsp;
+                                    </a>
+                                    <button data-id="{{product._id}}" class="btn btn-danger delete">删除</button>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    {{else}}
+                        <tr><td colspan="5" style="text-align: center;">没有产品</td></tr>
+                    {{/if}}
+                </tbody>
+            </table>
+            <nav>
+                <ul class="pager">
+                    <li>共 {{products.total}} 件产品</li>
+                    {{#if showFirst}}
+                        <li><a href="javascript:void(0)" data-name="first">第一页</a></li>
+                    {{/if}}
+                    <li><a href="javascript:void(0)" data-name="prev">上一页</a></li>
+                    <li><a href="javascript:void(0)" data-name="next">下一页</a></li>
+                    {{#if showLast}}
+                        <li><a href="javascript:void(0)" data-name="last">最后一页</a></li>
+                    {{/if}}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</template>
