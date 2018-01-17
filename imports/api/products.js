@@ -19,14 +19,16 @@ if (Meteor.isServer) {
 
         if (price && price.length) {
             let range = {};
-            if (typeof price[0] === Number) {
+            if (typeof price[0] === 'number' && price[0] >= 0) {
                 range['$gte'] = price[0];
             }
-            if (typeof price[1] === Number) {
+            if (typeof price[1] === 'number' && price[1] >= 0) {
                 range['$lte'] = price[1];
             }
 
-            where['price'] = range;
+            if (typeof range['$gte'] !== 'undefined' || typeof range['$lte'] !== 'undefined') {
+                where['price'] = range;
+            }
         }
 
         // 总数

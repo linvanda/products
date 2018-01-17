@@ -1,6 +1,15 @@
 .wrapper {
     padding: 20px 30px;
 }
+.wrap {
+    padding: 20px 0;
+}
 .search {
     padding: 40px 0;
+}
+.required {
+    color: red;
+}
+.error {
+    color: red;
 }

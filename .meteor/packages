@@ -25,3 +25,4 @@ reactive-dict
 jquery
 arillo:flow-router-helpers
 tmeasday:publish-counts
+themeteorchef:jquery-validation

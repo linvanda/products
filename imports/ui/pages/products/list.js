@@ -11,7 +11,7 @@ Template.Products_list.onCreated(function() {
     this.state = new ReactiveDict();
     this.state.setDefault({
         page: 1,
-        pageSize: 5,
+        pageSize: 20,
         name: '',
         price: []
     });
@@ -75,12 +75,42 @@ Template.Products_list.events({
         event.preventDefault();
     },
     // 搜索
-    'click #search-btn'(event, instance) {
-        alert('dd')
+    'click #search-btn'() {
+        const form = $('#search');
+
+        const name = $.trim(form.find('input[name="name"]').val());
+        let minPrice = parseFloat($.trim(form.find('input[name="min-price"]').val()));
+        let maxPrice = parseFloat($.trim(form.find('input[name="max-price"]').val()));
+
+        let sets = { page: 1 };
+
+        sets['name'] = name;
+
+        if (minPrice !== minPrice) {
+            minPrice = null;
+        }
+
+        if (maxPrice !== maxPrice) {
+            maxPrice = null;
+        }
+
+        sets['price'] = [minPrice, maxPrice];
+
+        Template.instance().state.set(sets);
+        console.log(Template.instance().state.get('price'));
     },
     // 重置搜索
-    'click #reset-btn'(event, instance) {
+    'click #reset-btn'() {
+        const form = $('#search');
+        form.find('input[name="name"]').val('');
+        form.find('input[name="min-price"]').val('');
+        form.find('input[name="max-price"]').val('');
 
+        Template.instance().state.set({
+            name: '',
+            price: [],
+            page: 1
+        });
     },
     'click .delete'(event) {
         const id = $(event.target).attr('data-id');
