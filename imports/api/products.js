@@ -59,8 +59,8 @@ Meteor.methods({
             name,
             price,
             desc,
-            createdAt: new Date(),
-            updatedAt: new Date()
+            createdAt: new Date().Format("yyyy-MM-dd hh:mm:ss"),
+            updatedAt: new Date().Format("yyyy-MM-dd hh:mm:ss")
         })
     },
     'products.edit'(id, name, price, desc) {
@@ -74,7 +74,7 @@ Meteor.methods({
                 name,
                 price,
                 desc,
-                updatedAt: new Date()
+                updatedAt: new Date().Format("yyyy-MM-dd hh:mm:ss")
             }
         })
     },

@@ -1,0 +1,134 @@
+POST http://localhost:9200/meteor/products/_search
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{   "query" : { "match" : { "name" : "mongodb" }} }
+
+<> 2018-01-17T111034.200.json
+
+###
+
+POST http://localhost:9200/meteor/products/_search
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{   "query" : { "match" : { "name" : "mongo" }} }
+
+<> 2018-01-17T111010.200.json
+
+###
+
+POST http://localhost:9200/meteor/products/_search
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{   "query" : { "match" : { "name" : "产品" }} }
+
+<> 2018-01-17T110955.200.json
+
+###
+
+POST http://localhost:9200/meteor/products/_search
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{   "query" : { "match" : { "name" : "kklkkll" }} }
+
+<> 2018-01-17T110941.200.json
+
+###
+
+POST http://localhost:9200/meteor/products/_search
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+<> 2018-01-17T110932.200.json
+
+###
+
+GET http://localhost:9200/meteor/products/_search
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+<> 2018-01-17T110806.200.json
+
+###
+
+GET http://localhost:9200/meteor/products/_search
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+<> 2018-01-17T110633.200.json
+
+###
+
+GET http://localhost:9200/meteor/products/_search
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+<> 2018-01-17T110511.200.json
+
+###
+
+PUT http://localhost:9200/meteor
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{   "mappings": {     "products": {       "properties": {         "name": {           "type": "text",           "analyzer": "ik_max_word",           "search_analyzer": "ik_max_word"         },         "price": {           "type": "float"         },         "desc": {           "type": "text",           "analyzer": "ik_max_word",           "search_analyzer": "ik_max_word"         },         "createdAt": {           "type": "date",           "format": "yyy-MM-dd HH:mm:ss"         },         "updatedAt": {           "type": "date",           "format": "yyy-MM-dd HH:mm:ss"         }       }     }   } }
+
+<> 2018-01-17T104102.200.json
+
+###
+
+PUT http://localhost:9200/meteor
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{   "mappings": {     "products": {       "properties": {         "_id": {           "type": "text",           "index": "not_analyzed"         },         "name": {           "type": "text",           "analyzer": "ik_max_word",           "search_analyzer": "ik_max_word"         },         "price": {           "type": "float"         },         "desc": {           "type": "text",           "analyzer": "ik_max_word",           "search_analyzer": "ik_max_word"         },         "createdAt": {           "type": "date",           "format": "yyy-MM-dd HH:mm:ss"         },         "updatedAt": {           "type": "date",           "format": "yyy-MM-dd HH:mm:ss"         }       }     }   } }
+
+<> 2018-01-17T104017.400.json
+
+###
+
+PUT http://localhost:9200/meteor
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{   "mappings": {     "products": {       "properties": {         "_id": {           "type": "string",           "index": "not_analyzed"         },         "name": {           "type": "string",           "analyzer": "ik_max_word",           "search_analyzer": "ik_max_word"         },         "price": {           "type": "float"         },         "desc": {           "type": "string",           "analyzer": "ik_max_word",           "search_analyzer": "ik_max_word"         },         "createdAt": {           "type": "date",           "format": "yyy-MM-dd HH:mm:ss"         },         "updatedAt": {           "type": "date",           "format": "yyy-MM-dd HH:mm:ss"         }       }     }   }  }
+
+<> 2018-01-17T103914.400.json
+
+###
+
+PUT http://localhost:9200/meteor
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{   "mappings": {     "products": {       "properties": {         "_id": {           "type": "string",           "index": "not_analyzed"         },         "name": {           "type": "string",           "analyzer": "ik_max_word",           "search_analyzer": "ik_max_word"         },         "price": {           "type": "float",         },         "desc": {           "type": "string",           "analyzer": "ik_max_word",           "search_analyzer": "ik_max_word"         },         "createdAt": {           "type": "date",           "format": "yyy-MM-dd HH:mm:ss"         },         "updatedAt": {           "type": "date",           "format": "yyy-MM-dd HH:mm:ss"         }       }     }   } }
+
+<> 2018-01-17T103746.400.json
+
+###
+
+PUT http://localhost:9200/meteor
+Accept: */*
+Cache-Control: no-cache
+
+{   "mappings": {     "products": {       "properties": {         "_id": {           "type": "string",           "index": "not_analyzed"         },         "name": {           "type": "string",           "analyzer": "ik_max_word",           "search_analyzer": "ik_max_word"         },         "price": {           "type": "float",         },         "desc": {           "type": "string",           "analyzer": "ik_max_word",           "search_analyzer": "ik_max_word"         },         "createdAt": {           "type": "date",           "format": "yyy-MM-dd HH:mm:ss"         },         "updatedAt": {           "type": "date",           "format": "yyy-MM-dd HH:mm:ss"         }       }     }   } }
+
+<> 2018-01-17T103705.406.json
+
+###
+
