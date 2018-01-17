@@ -5,7 +5,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { $ } from 'meteor/jquery';
 import './list.html';
 
-import { Products } from '../../../api/products.js';
+import { ProductsForSearch, Count } from '../../../api/products.js';
 
 Template.Products_list.onCreated(function() {
     this.state = new ReactiveDict();
@@ -18,21 +18,22 @@ Template.Products_list.onCreated(function() {
 
     this.autorun(() => {
         this.subscribe(
-            'products.list',
+            'products.list.fullsearch',
             this.state.get('page'),
             this.state.get('pageSize'),
             this.state.get('name'),
             this.state.get('price')
         );
     });
+
+    this.subscribe('products.list.count');
 });
 
-// 这些方法可以直接在模板中使用
 Template.Products_list.helpers({
     products() {
         return {
-            total: Counts.get('products.list.count'),
-            products: Products.find().fetch()
+            total: (Count.findOne() || { count: 0 })['count'],
+            products: ProductsForSearch.find().fetch()
         };
     },
     currentPage() {
@@ -116,6 +117,7 @@ Template.Products_list.events({
         const id = $(event.target).attr('data-id');
         if (id && confirm('确定删除该产品记录吗？')) {
             Meteor.call('products.delete', id);
+            // window.location.reload();
         }
     }
 });

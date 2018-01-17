@@ -3,6 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 export const Products = new Mongo.Collection('products');
+// 全文搜索临时数据用
+export const ProductsForSearch = new Mongo.Collection('products_search');
+export const Count = new Mongo.Collection('count');
 
 if (Meteor.isServer) {
     // 列表
@@ -31,8 +34,9 @@ if (Meteor.isServer) {
             }
         }
 
-        // 总数
-        Counts.publish(this, 'products.list.count', Products.find(where));
+        // 将总数记录起来供前端使用
+        const total = (Products.find(where) || []).count();
+        Count.upsert({ flag: 'product' }, { '$set': { count: total } });
 
         return Products.find(where, {
             limit: pageSize,
@@ -41,12 +45,49 @@ if (Meteor.isServer) {
         });
     });
 
+    // 列表：全文搜索
+    Meteor.publish('products.list.fullsearch', function(page = 1, pageSize = 20, keyword = '', price = []) {
+        check(page, Number);
+        check(pageSize, Number);
+        check(keyword, String);
+
+        const result = require('./elasticsearch').default(keyword, price, page, pageSize);
+
+        let sort = 0;
+        ProductsForSearch.remove({});
+        result.list.forEach(item => {
+            // 添加排序字段
+            item['sort'] = sort++;
+            ProductsForSearch.insert(item);
+        });
+
+        // 将总数记录起来供前端使用
+        Count.upsert({ flag: 'product' }, { '$set': { count: result['total'] } });
+
+        return ProductsForSearch.find({}, { sort: { sort: 1 } });
+    });
+
+    // 计数器
+    Meteor.publish('products.list.count', function() {
+        return Count.find({ flag: 'product' })
+    });
+
     // 详情
     Meteor.publish('products.detail', function(id = '') {
         check(id, String);
 
         return Products.find({ _id: id });
     })
+}
+
+function refreshDirtyData($dirtyId) {
+    if (!$dirtyId) {
+        return;
+    }
+
+    if (ProductsForSearch.remove({ '_id': $dirtyId })) {
+        Count.update({ flag: 'product' }, { $inc: { count: -1 } });
+    }
 }
 
 Meteor.methods({
@@ -82,5 +123,7 @@ Meteor.methods({
         check(id, String);
 
         Products.remove(id);
+
+        refreshDirtyData(id);
     }
 });
